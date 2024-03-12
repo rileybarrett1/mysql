@@ -1,0 +1,88 @@
+REATE DATABASE `airline`;
+USE `airline`;
+
+CREATE TABLE `pilot` (
+  `firstname` VARCHAR(45),
+  `lastname` VARCHAR(45),
+  `passport` VARCHAR(45) primary key,
+  `street_number` VARCHAR(10),
+  `street_name` VARCHAR(45),
+  `city` VARCHAR(45),
+  `prov_or_state` VARCHAR(45),
+  `country` VARCHAR(45),
+  `code` VARCHAR(10),
+  `dob` DATE,
+  `certification_id` VARCHAR(45)
+);
+CREATE TABLE `airframe`(
+  `id` VARCHAR(10) PRIMARY KEY,
+  `range` INT,
+  `seats` INT,
+  `fuel_capacity` INT,
+  `make` VARCHAR(45),
+  `model` VARCHAR(45),
+  `last_maintenance` DATE
+);
+
+CREATE TABLE `pilot_cert` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `pilot_id` varchar(45) NOT NULL,
+  `airframe_id` VARCHAR(45) NOT NULL,
+  FOREIGN KEY (`pilot_id`) REFERENCES `pilot`(`passport`),
+  FOREIGN KEY (`airframe_id`) REFERENCES `airframe`(`id`)
+);
+
+CREATE TABLE `route`(
+  `id` VARCHAR(45) PRIMARY KEY,
+  `depart` VARCHAR(45),
+  `destination` VARCHAR(45)
+);
+
+
+CREATE TABLE `flight` (
+  `id` VARCHAR(10) PRIMARY KEY,
+  `route_id` VARCHAR(15),
+  `airframe_id` VARCHAR(45),
+  `departs` DATETIME,
+  `duration` TIME,
+  `pilot_id` varchar(45),
+  `fuel_at_dep` VARCHAR(45),
+  FOREIGN KEY (`airframe_id`) REFERENCES `airframe`(`id`),
+  FOREIGN KEY (`pilot_id`) REFERENCES `pilot`(`passport`)
+);
+
+
+CREATE TABLE `passenger` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `firstname` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `passport` VARCHAR(54),
+  `streetnumber` VARCHAR(10),
+  `streetname` VARCHAR(45),
+  `city` VARCHAR(45),
+  `prov_or_state` VARCHAR(45),
+  `country` VARCHAR(45),
+  `code` VARCHAR(10),
+  `dob` DATE,
+  `flight_id` VARCHAR(10),
+  FOREIGN KEY (`flight_id`) REFERENCES flight(id)
+);
+
+INSERT INTO `pilot` (`firstname`, `lastname`, `passport`, `street_number`, `street_name`, `city`, `prov_or_state`, `country`, `code`, `dob`, `certification_id`)
+VALUES ('danny', 'cheese', '194836', '21', 'edwards pl', 'st.johns', 'newfoundland', 'canada', 'a0b9 3p5', '1999-02-04', '187356');
+
+INSERT INTO `airframe` (`id`, `range`, `seats`, `fuel_capacity`, `make`, `model`)
+VALUES ('200', 250, 1000, 747, 'boeing', '2023-10-27');
+
+INSERT INTO `pilot_cert` 
+VALUES (1, '194836','200');
+
+INSERT INTO `route` (`id`, `depart`, `destination`)
+VALUES ('1937465', 'yyt', 'yyz');
+
+insert into `flight` (`id`,`route_id`,`airframe_id`,`departs`,`pilot_id`,`fuel_at_dep`)
+values ('345','1937465','200','2024-4-1 06:00','194836','20000')
+;
+
+INSERT INTO `passenger` (`firstname`, `lastname`, `passport`, `streetnumber`, `streetname`, `city`, `prov_or_state`, `country`, `code`, `dob`, `flight_id`)
+VALUES ('riley', 'barrett', 'szdryg67544', '8', 'edwards pl', 'mountpearl', 'newfoundland', 'canada', '163474', '2024-02-16', '345');
