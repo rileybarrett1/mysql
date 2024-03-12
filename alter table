@@ -1,0 +1,16 @@
+create table unit (
+vin varchar (40),
+enginesn varchar(40),
+color varchar(20),
+style varchar(20),
+awd int,
+manualtrans int,
+sunroof int,
+tiresize varchar(10)
+);
+
+
+alter table unit add primary key(vin);
+
+/*alter table unit drop primary key;*/
+alter table unit add foreign key (vin) references inventory (vin);
