@@ -1,0 +1,109 @@
+CREATE DATABASE `airline`;
+use `airline`;
+
+CREATE TABLE `pilot` (
+  `Firstname` varchar(45) ,
+  `Lastname` varchar(45) ,
+  `passport` varchar(45) ,
+  `street number` varchar(10),
+  `street name` varchar(45),
+  `city` varchar(45),
+  `prov or state` varchar(45),
+  `country` varchar(45),
+  `code` varchar(10),
+  `dob date` date default null,
+   `cerificationid`varchar(45)
+  
+  );
+
+  
+  
+  
+  
+  
+  CREATE TABLE `passenger` (
+  `firstname` varchar(45) NOT NULL,
+  `lastname` varchar(45) NOT NULL,
+  `passport` varchar(54),
+  `streetnumber` varchar(10),
+  `streetname` varchar(45),
+  `city` varchar(45),
+  `provorstate` varchar(45),
+   `country` varchar(45),
+   `code` varchar(10),
+   `dob` date,
+   `flightid` varchar(10),
+   foreign key(flightid) references flight(id)
+	
+  );
+ 
+  
+    CREATE TABLE `flight` (
+  `id` varchar(10) NOT NULL primary key,
+  `routeid` varchar(15) NOT NULL,
+  `airframe eid` varchar(45) NOT NULL,
+  `departs` datetime,
+   `duration` time,
+    `pilotid` varchar(45),
+	`fuelatdep` varchar(45),
+    foreign key(airframeid) references pilotcert(airframeid),
+    foreign key(pilotid) references pilotcert(pilotid)
+);
+
+  CREATE TABLE `pilot cert` (
+  `id int` int,
+  `pilotid` varchar(45) NOT NULL,
+  `airframeid` varchar(45) NOT NULL,
+  foreign key(plotid) references pilot(ceritificationid),
+  foreign key(airframeid) references flight(airframeid)
+  );
+  
+  create table `airframe`(
+  `id` varchar(10),
+  `range` int,
+  `seats` int,
+  `fuelcapacity` int,
+  `make` varchar(45),
+  `model` varchar(45),
+  `lastmaintenance` date
+  );
+  
+  create table `route`(
+  `id` varchar(45),
+  `depart` varchar(45),
+  `destination`varchar(45),
+  foreign key (id) references flight(routeid)
+	);
+    
+    
+    insert into pilot values
+    ('danny',
+    'cheese',
+    '194836',
+    '21',
+    'edwards pl',
+    'st.johns',
+    'newfoundland',
+    'canada',
+    'a0b9 3p5',
+    '1999-02-04')
+    ;
+    
+    insert into pilotcert values
+    ('187356',
+    '89742090',
+    '678')
+    ;
+    
+    insert into airframe values 
+    ('200', '250','1000','747','boeing','2023-10-27')
+    ;
+    
+    insert into route values 
+    ('1937465','yyt','yyz')
+    ;
+    
+    insert into passenger values
+    ('riley','barrett','szdryg67544','8','edwards pl','mountpearl','newfoundland','canada','163474','2024-02-16','ut23')
+    ;
+
