@@ -1,0 +1,21 @@
+USE ap;
+DELIMITER //
+
+DROP PROCEDURE IF EXISTS balanceLess;
+
+CREATE PROCEDURE balanceLess()
+BEGIN
+    DECLARE invoice_count INT;
+    DECLARE total_balance DECIMAL(10,2);
+   
+    SELECT COUNT(*), SUM(invoice_count) INTO invoice_count, total_balance FROM Invoices;
+   
+    IF total_balance >= 15000 THEN
+        SELECT CONCAT('Total invoices: ', invoice_count, ', Total balance: $', total_balance) AS Result;
+    ELSE
+        SELECT CONCAT(invoice_count, ' invoices exceed 15000') AS Result;
+    END IF;
+END //
+
+DELIMITER ;
+call balanceLess()
