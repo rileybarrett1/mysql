@@ -1,0 +1,40 @@
+use ap;
+delimiter // 
+drop procedure if exists test;
+create procedure test()
+begin
+    declare vendor_id_var varchar(255);
+    declare invoice_number_var varchar(50);
+    declare invoice_total_var decimal(9,2);
+    declare row_not_found tinyint default false;
+    
+    declare invoice_string varchar(1000) default '';
+    
+    declare invoices_cursor cursor for  
+    select vendor_id, invoice_number, invoice_total
+    from invoices
+    where invoice_total >= 5000
+    order by invoice_total desc;
+    
+    declare continue handler for not found 
+    set row_not_found = TRUE;
+    
+    open invoices_cursor;
+    
+    fetch_loop: loop
+        fetch invoices_cursor into vendor_id_var, invoice_number_var, invoice_total_var;
+        
+        if row_not_found then
+            leave fetch_loop;
+        end if;
+        
+        set invoice_string = concat(invoice_string, invoice_total_var, '|', invoice_number_var, '|', vendor_id_var, '//');
+    end loop fetch_loop;
+    
+    close invoices_cursor;
+    
+    select invoice_string as Invoice_Details;
+end//
+delimiter //;
+
+call test;
