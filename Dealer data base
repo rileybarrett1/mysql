@@ -1,1 +1,11 @@
 
+CREATE DATABASE `dealer`;
+use `dealer`;
+CREATE TABLE `book` (
+  `make` varchar(255) NOT NULL,
+  `dealer` varchar(15) NOT NULL,
+  `dealership` varchar(45) NOT NULL,
+  `production date` varchar(255) NOT NULL,
+  `quantity` varchar(80) DEFAULT NULL,
+  `sales reps` date NOT NULL
+);
