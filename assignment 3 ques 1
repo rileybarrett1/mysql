@@ -1,0 +1,13 @@
+use ap;
+DELIMITER //
+drop procedure if exists balanceGreater;
+CREATE PROCEDURE balanceGreater()
+BEGIN
+    DECLARE invoice_count INT;
+    SELECT COUNT(*) INTO invoice_count FROM Invoices WHERE payment_total >= 7000;
+   
+    -- Display the result set
+    SELECT CONCAT(invoice_count, ' invoices exceed $7,000.') AS Result;
+END //
+DELIMITER ;
+CALL balanceGreater()
